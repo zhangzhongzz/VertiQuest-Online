@@ -1,0 +1,42 @@
+<!--test.wxml-->
+<!--block wx:for="{{itemList}}" wx:key="id">
+  <view class='item_container' bindtap='itemSelected' data-index='{{index}}'>
+     <image class='select_icon' src="{{item.isSelected?'/image/selected.png':'/image/unselected.png'}}"></image>
+     <text class='text'>{{item.name}}</text>
+  </view>
+</block-->
+
+<view class="dewarp">
+<view class='com-selectBox'  wx:for="{{detil}}"  wx:for-item="item" wx:key="">
+    <view class='com-sContent'  bindtap='showList' data-id='{{item.repairitemsetid}}'>
+        <view class='com-sTxt'>{{item.repairitemsetname}}</view>
+        <view class="caricon">
+        <image data-id='{{id}}' src="../../image/1.png" class='com-sImg {{imgshow&&"select_img_rotate"}}'  ></image></view>
+    </view>
+    <view class=" {{item.isShow?'show':'hide'}}" >
+    <!--  -->
+        <view wx:for="{{notice}}" wx:for-item="item" wx:key="" class='com-sItem'>
+       <i-row >
+       <!--  -->
+       <i-col span="15" i-class=""> 
+       <view class="cb">
+       <checkbox-group bindchange="checkboxChange">
+            <label class="checkbox">
+              <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.repairitemname}}
+            </label>
+         </checkbox-group>
+         </view>
+     </i-col>
+     <!--  -->
+       <i-col span="9" i-class="carmoney">
+        <view class="carpropectdo">
+         <view class="carpropectdollows"><input></input>元</view>
+        </view>
+       </i-col>
+       </i-row>
+        </view>
+        <!--  -->
+    </view>
+</view>
+</view>
+
