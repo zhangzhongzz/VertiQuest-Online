@@ -1,69 +1,87 @@
 <!--index.wxml-->
 <form bindsubmit="formSubmit">
-<view class="weui-cell weui-cell_input">
-  <view class="weui-cell__hd">
-    <view class="weui-label">手机号</view>
-   </view>
-    <view class="weui-cell__bd">
-    <input class="weui-input" name="no" placeholder="请输入手机号" value=''/>
-   </view>
-  </view>
-  <view class="weui-cell weui-cell_input">
-  <view class="weui-cell__hd">
-    <view class="weui-label">姓名</view>
-   </view>
-    <view class="weui-cell__bd">
-    <input class="weui-input" name="name" placeholder="请输入姓名" value=''/>
-   </view>
-  </view>
-  <view class="weui-cell weui-cell_input">
-  <view class="weui-cell__hd">
-    <view class="weui-label">性别</view>
-   </view>
-    <view class="weui-cell__bd">
-    <input class="weui-input" name="sex" value="{{sex}}"/>
-   </view>
-     <view class="weui-cell__ft">
-    <switch checked bindchange="switch1Change"/>
-  </view>
-  </view>
 
-  <view class="weui-cell weui-cell_input">
-    <view class="weui-cell__hd">
-      <view class="weui-label">年龄</view>
+  <view class='content' style="backgroud-color:white">
+    <view style="flex:4 ;background-color:white">
+      <view class="left-label">姓名</view>
     </view>
-    <view class="weui-cell__bd">
-       <input class="weui-input" name="age" placeholder="请输入年龄" value=''/>
+    <view  calss="center-label" style="flex:8 ;background-color:white" >
+      <input class="weui-input" name="name" placeholder="请输入姓名" value="{{name}}" disabled ="{{edit=='编辑'?'true':''}}"/>
     </view>
+    <image class="image" style="flex:1" src = '../../image/star.png'></image>
   </view>
 
+  <view class="line" style=''></view>
 
-  <view class="weui-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                  <view class="weui-uploader__title">个人照片</view>
-                  <view class="weui-uploader__info">0/1</view>
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imageList}}" wx:for-item="image">
-                      <view class="weui-uploader__file">
-                        <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
-                      </view>
-                    </block>
-                  </view>
-                  <view class="weui-uploader__input-box">
-                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
-                  </view>
-                </view>
-              </view>
-            </view>
+  <view class='content'>
+    <view style="flex:4 ;background-color:white">
+      <view class="left-label">手机</view>
+    </view>
+    <view  calss="center-label" style="flex:8 ;background-color:white" >
+      <input maxlength="11" class="weui-input" name="phone" placeholder="请输入手机号" value="{{phone}}" disabled ="{{edit=='编辑'?'true':''}}"/>
+    </view>
+     <image class="image" style="flex:1" src = '../../image/star.png'></image>
+  </view>
+
+  <view class="line" style=''></view>
+
+  <view class='content'>
+    <view style="flex:4 ;background-color:white">
+      <view class="left-label">年龄</view>
+    </view>
+    <view  calss="center-label" style="flex:8 ;background-color:white" >
+      <input class="weui-input" name="age" placeholder="请输入年龄" value="{{age}}" disabled ="{{edit=='编辑'?'true':''}}"/>
+    </view>
+     <image class="image" style="flex:1" src = '../../image/star.png'></image>
+  </view>
+
+ <view class="line" style=''></view>
+
+ <view class='content'>
+    <view style="flex:4 ;background-color:white">
+      <view class="left-label">性别</view>
+    </view>
+    <view calss="center-label" style="flex:8 ;background-color:white" >
+      <radio-group class="radio-group" bindchange="sexChange">
+        <label class="radio" wx:for="{{sex}}" wx:key="index">
+          <text  class='radio1' >{{item.value}}</text>
+          <radio class="radio" value="{{item.value}}" checked="{{item.checked=='true'?'true':''}}" disabled ="{{edit=='编辑'?'true':''}}"/>
+        </label>
+      </radio-group>
+    </view>
+    <image class="image" style="flex:1" src = '../../image/star.png'></image>
+  </view>
+
+ <view class="weui-cells">
+   <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view class="weui-uploader">
+          <view class="weui-uploader__hd">
+            <view class="weui-uploader__title">个人照片</view>
+            <view class="weui-uploader__info">0/1</view>
           </view>
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files">
+              <block wx:for="{{imageList}}" wx:for-item="image">
+                <view class="weui-uploader__file">
+                  <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+                </view>
+              </block>
+            </view>
+            <view class="weui-uploader__input-box">
+              <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            </view>
+           </view>
         </view>
-     <view class="weui-btn-area">
-    <button class="weui-btn" type="primary" form-type="submit">确定</button>
-     </view>   
+      </view>
+    </view>      
+  </view>
+      
+  <button class="submit-button" type="primary" form-type="submit" bindtap="editButton">{{edit}}</button>
+
 </form>
+
+
+ 
+
 

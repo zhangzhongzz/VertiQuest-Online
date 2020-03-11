@@ -1,1 +1,55 @@
 /* pages/infor.wxss */
+
+ radio-group{
+  display: flex;
+  align-items: center;
+}
+ radio-group .radio{
+  margin-left: 0rpx;
+  margin-right: 30rpx
+}
+
+.radio1{
+  margin-right: 10rpx;
+}
+
+ radio-group radio{
+  margin-left: 10rpx;
+}
+
+.submit-button{
+  width: 100%;
+  position: fixed;
+  bottom: 30rpx;
+  left: 0;
+  right: 0;
+  z-index: 69;
+  height: 80rpx;
+  align-items: center;
+}
+
+.content{
+  display: flex;
+  flex-direction: row;
+  height:100rpx;
+  align-items: center;
+}
+
+.left-label{
+  margin-left: 80rpx;
+}
+
+.center-label{
+  align-items: center;
+}
+
+.line {
+   background-color: rgb(245, 240, 240);
+   height: 2rpx;
+   width: 100%;
+}
+
+.image{
+  height: 50rpx;
+  width: 50rpx;
+}

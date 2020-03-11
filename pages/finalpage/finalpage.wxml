@@ -1,0 +1,84 @@
+<wxs module="finalpage" src="finalpage.wxs"></wxs>
+<view class='container1'>
+    <view class="sheet">
+    <scroll-view scroll-y="true" style="height: 1050rpx">
+      <block wx:for="{{qnaire}}" wx:for-index="idx" wx:for-item="item">
+          <form wx:if="{{finalpage.panduan(array,idx)}}" bindsubmit='submit'>
+            
+            <view wx:if="{{item.type==='SCQ'}}">
+              <view class='question'>{{item.question+"(单选)"}}</view>
+              <!--view class='border' /-->
+              <radio-group class='radio-group' name='answer' bindchange='radioChange'>
+                <label class='radio'><radio value="A" color='#87ceeb' />{{item.option.a}}</label>
+                <label class='radio'><radio value="B" color='#87ceeb' />{{item.option.b}}</label>
+                <label class='radio'><radio value="C" color='#87ceeb' />{{item.option.c}}</label>
+                <label class='radio'><radio value="D" color='#87ceeb' />{{item.option.d}}</label>
+              </radio-group>
+            </view>
+            <view wx:if="{{item.type==='SCQT'}}">
+              <view class='question'>{{item.question+"(单选)"}}</view>
+              <!--view class='border' /-->
+              <radio-group class='radio-group' name='answer' bindchange='radioChange1'>
+                <label class='radio'><radio value="A" color='#87ceeb' checked="{{finalpage.panduan(option2[idx],'A')?'true':''}}" disabled="true"/>{{item.option.a}}</label>
+              <label hidden="{{!showView}}" class='radio'><radio  value="B" color='#87ceeb'disabled="true" checked='true'/>{{cishu+'次'}}</label>
+              <label hidden="{{showView}}" class='radio'><radio value="B" color='#87ceeb'disabled="true" checked=''/>{{item.option.b}}</label>
+                <label class='radio'><radio value="C" color='#87ceeb'disabled="true" checked="{{finalpage.panduan(option2[idx],'C')?'true':''}}"/>{{item.option.c}}</label>
+              </radio-group>
+            </view>
+            <view wx:if="{{item.type==='MCQ'}}">
+              <view class='question'>{{item.question+"(多选)"}}</view>
+              <!--view class='border' /-->
+          
+              <checkbox-group class='checkbox-group' name='answer' bindchange='radioChange'>
+                <label class='checkbox'><checkbox value="A" color='#87ceeb' checked="{{finalpage.panduan(option2[idx],'A')?'true':''}}"disabled="true"/>{{item.option.a}}</label>
+                <label class='checkbox'><checkbox value="B" color='#87ceeb'checked="{{finalpage.panduan(option2[idx],'B')?'true':''}}"disabled="true" />{{item.option.b}}</label>
+                <label class='checkbox'><checkbox value="C" color='#87ceeb'checked="{{finalpage.panduan(option2[idx],'C')?'true':''}}"disabled="true" />{{item.option.c}}</label>
+                <label class='checkbox'><checkbox value="D" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'D')?'true':''}}"disabled="true"/>{{item.option.d}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>4}}"><checkbox value="E" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'E')?'true':''}}"disabled="true"/>{{item.option.e}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>5}}"><checkbox value="F" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'F')?'true':''}}"disabled="true"/>{{item.option.f}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>6}}"><checkbox value="G" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'G')?'true':''}}"disabled="true"/>{{item.option.g}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>7}}"><checkbox value="H" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'H')?'true':''}}"disabled="true"/>{{item.option.h}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>8}}"><checkbox value="I" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'I')?'true':''}}"disabled="true"/>{{item.option.i}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>9}}"><checkbox value="J" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'J')?'true':''}}"disabled="true"/>{{item.option.j}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>10}}"><checkbox value="K" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'K')?'true':''}}"disabled="true" />{{item.option.k}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>11}}"><checkbox value="L" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'L')?'true':''}}"disabled="true"/>{{item.option.l}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>12}}"><checkbox value="M" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'M')?'true':''}}"disabled="true"/>{{item.option.m}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>13}}"><checkbox value="N" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'N')?'true':''}}"disabled="true"/>{{item.option.n}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>14}}"><checkbox value="O" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'O')?'true':''}}"disabled="true"/>{{item.option.o}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>15}}"><checkbox value="P" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'P')?'true':''}}"disabled="true"/>{{item.option.p}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>16}}"><checkbox value="Q" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'Q')?'true':''}}"disabled="true"/>{{item.option.q}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>17}}"><checkbox value="R" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'R')?'true':''}}"disabled="true"/>{{item.option.r}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>18}}"><checkbox value="S" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'S')?'true':''}}"disabled="true"/>{{item.option.s}}</label>
+                <label class='checkbox'wx:if="{{item.optnum>19}}"><checkbox value="T" color='#fcbe39' checked="{{finalpage.panduan(option2[idx],'T')?'true':''}}"disabled="true"/>{{item.option.t}}</label>
+              </checkbox-group>
+              
+            </view>
+            <block wx:if="{{item.type === 'MULTI'}}">
+                 <view  data-id='{{fatherIndex}}' >
+                 <view class = 'SAQTitle'>
+                    <text class='question' data-id='{{fatherIndex}}'>{{item.question}}</text>
+                 </view>
+
+                 <picker wx:if="{{idx==0}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDateChange">
+                     <view class="picker">
+                       当前选择: {{time}}
+                     </view>
+                 </picker>
+                 <picker wx:if="{{idx==1}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDate1Change">
+                     <view class="picker">
+                       当前选择: {{time1}}
+                     </view>
+                 </picker>
+                </view>
+            </block>
+            
+          </form>
+      </block>
+
+ </scroll-view>
+ <view class='button-group'>
+              <button class='button' hover-class='none' bindtap='back' >修改重填</button>
+              <button class='button' hover-class='none' form-type='submit' bindtap='formSubmit'>确认提交</button>
+            </view>
+     </view>    
+</view>

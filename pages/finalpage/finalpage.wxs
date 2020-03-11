@@ -1,0 +1,27 @@
+var panduan = function (arr, index) {
+  if (arr.indexOf(index) != -1) {
+    return true;
+  }
+  else return false;
+}
+
+var panduan1=function(a,b){
+  if (a.includes(b)) {
+    return true;
+  }
+  else return false;
+}
+
+var xuanxiang = function (a, b) {
+  if (a == b) {
+    return true;
+  } else
+    return false;
+
+}
+
+module.exports = {
+  panduan: panduan,
+  xuanxiang: xuanxiang,
+  panduan1:panduan1
+}

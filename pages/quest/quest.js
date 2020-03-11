@@ -1,252 +1,282 @@
-// pages/yaoxh6/item/item.js
+var util = require('../../utils/util.js')
+const db = wx.cloud.database()
+/*db.collection('wenjuan').where({
+  number:"1"
+}).get({
+  success: res => {
+    /*this.setData({
+      queryResult: JSON.stringify(res.data, null, 2)
+    })
+    console.log('[数据库] [查询记录] 成功: ', res)
+    //const qnaire = require("cloud://hht-yz5as.6868-hht-yz5as-1301271337/sas.js")
+  },
+  fail: err => {
+    wx.showToast({
+      icon: 'none',
+      title: '查询记录失败'
+    })
+    console.error('[数据库] [查询记录] 失败：', err)
+  }
+})*/
+const qnaire = require("../../pages/quest/sas.js")  //导入题库
+const luoji = require("../../pages/quest/luoji.js")
+//const qnaire = require("cloud://hht-yz5as.6868-hht-yz5as-1301271337/sas.js")
+var ans = new Array(5)  //答案数组初始化，会在onload函数中赋初值""
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    priceIcon: "../../../image/selected.png",
-    currentFatherIndex: 0,
-    questionnaireArray: [
-      {
-        //单选
-        "type": "SCQ",
-        "content": {
-          "description": "发病的次数（连续数天或数周持续症状算为一次发病）?",
-          "options":
-            [
-              { "id": 1, "name": "第一次发病", "isSelected": false },
-              { "id": 2, "name": "2到10次", "isSelected": false },
-              { "id": 3, "name": "大于10次", "isSelected": false }
-            ]
+    //queryResult:"",
+    luoji: luoji.luoji,
+    qnaire: qnaire.qnaire,
+    answer: ans,
+    id: 0,    //当前题号  比实际小一
+    answers: {
+      number: Array(),
+      option: Array()
+    },
+    n: 1,    //增加的题号
+    num: 0,  //当前已答题的数目
+    time: "0年0个月0天",  //第一次发病至今时间
+    time1: "0年0个月0天",  //最后一次发病至今时间
+    timearray: [0, 0, 0],      //第一次发病时间数组
+    timearray1: [0, 0, 0],
+    cishu: "2次",
+    cishu1: "2",
+    showView: false,
+    changeChoose: false,          //判断是否修改当前选项
+    finish: false,                //判断是否是返回修改状态  若是修改状态则下一题的按钮变为可选择的
+    shownext:true                 //依据此项判断是否下一题按钮可显示
+  },
+  radioChange: function (e) {     //暂时无用  没有纯单选题
+    console.log(e.detail.value)
+    console.log(this.data.luoji)
+    this.setData({ changeChoose: true })
+    for (var index in this.data.luoji) {
+      if (this.data.id + 1 == this.data.luoji[index].number) {
+        switch (e.detail.value) {
+          case "A": this.setData({ n: this.data.luoji[index].n.A }); break;
+          case "B": this.setData({ n: this.data.luoji[index].n.B }); break;
+          case "C": this.setData({ n: this.data.luoji[index].n.C }); break;
+          case "D": this.setData({ n: this.data.luoji[index].n.D }); break;
+          default: this.setData({ n: 1 })
         }
-      },
-      //多选
-      {
-        "type": "MCQ",
-        "content": {
-          "description": "以往发病反复发作频率?",
-          "options":
-            [
-              { "id": 1, "name": "每天多次发作", "isSelected": false },
-              { "id": 2, "name": "间隔数天", "isSelected": false },
-              { "id": 3, "name": "一月至数月发作一次", "isSelected": false },
-              { "id": 4, "name": "一年至数年发作一次", "isSelected": false }
-            ]
-        }
-      },
-      {
-        "type": "MCQ",
-        "content": {
-          "description": "请描述本次发病的不适感（可多选）？",
-          "options":
-            [
-              { "id": 1, "name": "外界物体旋转", "isSelected": false },
-              { "id": 2, "name": "自身旋转", "isSelected": false },
-              { "id": 3, "name": "头晕，无明显旋转感", "isSelected": false },
-              { "id": 4, "name": "直立时难以保持身体平衡", "isSelected": false },
-              { "id": 5, "name": "其他", "isSelected": false }
-            ]
-        }
-      },
-      //填写
-      {
-        "type": "SAQ",
-        "content": {
-          "description": "What's your name?",
-          "answer": ""
-        }
-      },
-
-      //次数选择器
-      {
-        "type": "CHOOSE",
-        "content": {
-          "description": "发病的次数",
-          "options":['1','2','3','4','5','6','7','8','9','10','大于10'],
-          "answer": ""
-        }
-      },
-      //日期选择器
-      {
-        "type": "DATE",
-        "content":{
-          "description": "第一次发病至今的时间",
-
-        }
-
+        //console.log(this.data.luoji[index].n.B)
       }
-    ],
+    }
+  },
+  radioChange1: function (e) {
+    //先根据改变后的选项值将取qnair中的isSelected值改变
+    var tab=0                                                                      //表示下一题按钮是否可点
+    for (var i in this.data.qnaire[this.data.id].option) {
+      if (this.data.qnaire[this.data.id].option[i].flag == e.detail.value) {       //若选项和flag一致
+        this.data.qnaire[this.data.id].option[i].isSelected=true;                  //设置为选中
+        tab=1;
+      }else{                                                                       //由于是单选题  其余都得重新置为false
+        this.data.qnaire[this.data.id].option[i].isSelected = false;   
+      }
+    }
+    if(tab==0){
+      this.setData({shownext:false})
+    }else {
+      this.setData({ shownext:true })
+    }
+    if (e.detail.value == 'B') {
+      this.setData({
+        showView: true,
+      })
+    } else {
+      this.setData({
+        showView: false,
+      })
+    }
+    this.setData({ changeChoose: true })
+    console.log(e.detail.value)
+    console.log(this.data.luoji)
+    for (var index in this.data.luoji) {
+      if (this.data.id + 1 == this.data.luoji[index].number) {
+        switch (e.detail.value) {
+          case "A": this.setData({ n: this.data.luoji[index].n.A }); break;
+          case "B": this.setData({ n: this.data.luoji[index].n.B }); break;
+          case "C": this.setData({ n: this.data.luoji[index].n.C }); break;
+          case "D": this.setData({ n: this.data.luoji[index].n.D }); break;
+          default: this.setData({ n: 1 });
+        }
+        //console.log(this.data.luoji[index].n.B)
+      }
+    }
+  },
+  checkboxChange: function (e) {
+    //先根据改变后的选项值将取qnair中的isSelected值改变
+    var tab=0
+    for (var i in this.data.qnaire[this.data.id].option) {
+      if (e.detail.value.indexOf(this.data.qnaire[this.data.id].option[i].flag)!=-1) {       //若选项和flag一致
+        this.data.qnaire[this.data.id].option[i].isSelected = true;                  //设置为选中
+        tab=1;
+      } else {                                                                       //其余都得重新置为false
+        this.data.qnaire[this.data.id].option[i].isSelected = false;
+      }
+    }
+    if (tab == 0) {
+      this.setData({ shownext: false })
+    } else {
+      this.setData({ shownext: true })
+    }
+    this.setData({ n: 1, changeChoose: true });
   },
 
-  bindPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+  nextq: function () {
+    var e="";
+    if (this.data.qnaire[this.data.id].type == 'SCQT' || this.data.qnaire[this.data.id].type == 'SCQ'){//若为单选题则需要逻辑判断
+    for( var i in this.data.qnaire[this.data.id].option){
+      if(this.data.qnaire[this.data.id].option[i].isSelected){       //若被选中
+        e = this.data.qnaire[this.data.id].option[i].flag;           //将标签给e
+      }
+    } 
+
+    for (var index in this.data.luoji) {
+      if (this.data.id + 1 == this.data.luoji[index].number) {
+        switch (e) {                                                 //按照标签进行判断下一个题号
+          case "A": this.setData({ n: this.data.luoji[index].n.A }); break;
+          case "B": this.setData({ n: this.data.luoji[index].n.B }); break;
+          case "C": this.setData({ n: this.data.luoji[index].n.C }); break;
+          case "D": this.setData({ n: this.data.luoji[index].n.D }); break;
+          default: this.setData({ n: 1 });                          //e为空值时则默认下一题+1
+        }
+        //console.log(this.data.luoji[index].n.B)
+      }
+    }
+    }
+    if (this.data.id < this.data.qnaire.length - 1) {
+      this.setData({
+        id: this.data.id + this.data.n,
+        n: 1,                              //设置完下一题id后重新将自增题号置1
+        changeChoose: false
+      })
+    }
+    //设置完新id后再判断下一到题的next按钮初始状态是否应该可用
+    if (this.data.qnaire[this.data.id].type == 'SCQT' || this.data.qnaire[this.data.id].type == 'SCQ' || this.data.qnaire[this.data.id].type == 'MCQ') {//若为单选或多选需判断下一题按钮是否为不可用
+      var tab = 0;
+      for (var i in this.data.qnaire[this.data.id].option) {
+        if (this.data.qnaire[this.data.id].option[i].isSelected) {       //若有一项选中
+          tab = 1; break;                                        //改变tab跳出循环
+        }
+      }
+      if (tab == 0) {
+        this.setData({ shownext: false })
+      } else {
+        this.setData({ shownext: true })
+      }
+    }
+  },
+
+  lastq: function (e) {
+    if (this.data.id != 0) {
+      this.setData({
+        //id: this.data.id - this.data.n,
+        //id:this.data.answers.number[this.data.num-1]-1,  //改变当前题号
+        id: this.data.answers.number[this.data.num - 1],  //改变当前题号
+        num: this.data.num - 1,                              //当前答题数目减一
+        changeChoose: false
+
+      })
+      if(this.data.id<2){
+        this.setData({
+          shownext:true
+        })
+      }
+      this.data.answers.number.splice(-1, 1);
+      this.data.answers.option.splice(-1, 1);
+    }
+  },
+
+  submit: function (e) {
+    console.log(e.detail.value);
+    var a = e.detail.value.answer;
+    var id = this.data.id;
+    //ans[id] = a;
+    var i = this.data.num;
+    //ans[i].questionnumber=id+1;   //从0开始
+    //ans[i].option=a;
+    //this.data.answers.number[i]=id+1; 
+    this.data.answers.number[i] = id;//题号从0开始
+    if (i == 0) {
+      this.data.answers.option[i] = this.data.timearray;
+    } else if (i == 1) {
+      this.data.answers.option[i] = this.data.timearray1;
+    } else if (i == 2) {
+      var opt = ["", ""];
+      opt[0] = a;
+      opt[1] = this.data.cishu1;
+      this.data.answers.option[i] = opt;
+    } else {
+      this.data.answers.option[i] = a;
+    }
     this.setData({
-      index: e.detail.value
+      answer: ans,
+      num: i + 1
+    })
+    console.log(this.data.answer);
+    console.log(this.data.answers);
+    /*wx.redirectTo({
+      url: '../finaltest1/finaltest1',
+    })*/
+
+  },
+
+  //
+  formSubmit: function () {
+    console.log(this.data.answers);
+    wx.navigateTo({
+      url: '../finalpage/finalpage?ques=' + JSON.stringify(this.data.answers.number) + '&ans=' + JSON.stringify(this.data.answers.option) + '&answers=' + JSON.stringify(this.data.answers),
     })
   },
 
+  //将用户完成的答案数组上传至云数据库
+  answer2db: function () {
+    var TIME = util.formatTime(new Date());
+    var DATE = util.formatDate(new Date());
+    db.collection('SAS').add({
+      data: {
+        name: '抑郁问卷',
+        answer: this.data.answers,
+        date: DATE,
+        time: TIME
+      },
+      success(res) {
+        console.log(res._id);
+      },
+      fail(res) {
+        wx.showToast({
+          icon: 'none',
+          title: '新增记录失败'
+        })
+        console.error('[数据库] [新增记录] 失败：', err)
+      }
+    })
+  },
   bindDateChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      date: e.detail.value
+      time: e.detail.value[0] + "年" + e.detail.value[1] + "个月" + e.detail.value[2] + "天",
+      timearray: e.detail.value
     })
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    console.log(options.id)
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  // fun : function(){
-  //   var q = {
-  //     test: this.data.test,
-  //     test2: this.data.test2
-  //   }
-  //   wx.cloud.callFunction({
-  //     name: 'release_questionnaire',
-  //     data: {
-  //       content: JSON.stringify(q)
-  //     },
-  //     success: res => {
-  //       // test = JSON.stringify(res)
-  //       // this.setData({
-  //       //   test : JSON.stringify(res.result.results.data[0].description)
-  //       // })
-  //       console.log('success')
-  //     }
-  //   })
-  // },
-
-  // fun2 : function(){
-  //   wx.cloud.callFunction({
-  //     name: 'get_all_questionnaire',
-  //     success: res => {
-  //       console.log(res)
-  //       var last = res.result.results.data[8].content
-  //       this.setData({
-  //         test: JSON.parse(last).test
-  //       })
-  //       console.log('success')
-  //     }
-  //   })
-  // }
-  goBack: function () {
-    console.log('to task page')
-    wx.switchTab({
-      url: '../task/task',
+  bindDate1Change: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      time1: e.detail.value[0] + "年" + e.detail.value[1] + "个月" + e.detail.value[2] + "天",
+      timearray1: e.detail.value
     })
   },
-
-  getTempFatherIndex: function (input) {
-    var tempFatherIndex = input.currentTarget.dataset.id;
-    //console.log('currentFatherIndex: ' + tempFatherIndex);
+  bindPickChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    var a = parseInt(e.detail.value);
+    a = a + 2;
     this.setData({
-      currentFatherIndex: tempFatherIndex,
-    });
+      cishu: a + "次",
+      cishu1: a + ""
+    })
   },
-
-  radioChangeSCQ: function (input) {
-    var tempFatherIndex = this.data.currentFatherIndex;
-    var tempArray = this.data.questionnaireArray;
-    for (var i in tempArray[tempFatherIndex].content.options) {
-      if (tempArray[tempFatherIndex].content.options[i].name == input.detail.value) {
-        tempArray[tempFatherIndex].content.options[i].isSelected = true;
-      }
-      else {
-        tempArray[tempFatherIndex].content.options[i].isSelected = false;
-      }
-    }
-    this.setData({
-      questionnaireArray: tempArray,
-    });
-  },
-
-  checkboxChangeMCQ: function (input) {
-    // console.log(input.detail.value);
-    var flag = false;
-    var tempFatherIndex = this.data.currentFatherIndex;
-    var tempArray = this.data.questionnaireArray;
-    for (var i in tempArray[tempFatherIndex].content.options) {
-      flag = false;
-      for (var j in input.detail.value) {
-        if (tempArray[tempFatherIndex].content.options[i].name == input.detail.value[j]) {
-          flag = true;
-        }
-      }
-      if (flag == true) {
-        tempArray[tempFatherIndex].content.options[i].isSelected = true;
-      }
-      else {
-        tempArray[tempFatherIndex].content.options[i].isSelected = false;
-      }
-    }
-    this.setData({
-      questionnaireArray: tempArray,
-    });
-  },
-
-  bindblurAnswerOfSAQ: function (input) {
-    var tempIndex = input.currentTarget.dataset.id;
-    var tempArray = this.data.questionnaireArray;
-    tempArray[tempIndex].content.answer = input.detail.value;
-    // console.log(tempArray[tempIndex].content);
-    this.setData({
-      questionnaireArray: tempArray,
-    });
-  },
-
-  complete: function () {
-    console.log(this.data.questionnaireArray);
-  },
+  stopTouchMove() {
+    return false
+  }
 })

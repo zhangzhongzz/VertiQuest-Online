@@ -2,17 +2,18 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/test/test",
-    "pages/fill/fill",
     "pages/quest/quest",
     "pages/video/video",
     "pages/player/player",
-    "pages/infor/infor"
+    "pages/infor/infor",
+    "pages/sound/sound",
+    "pages/result/result",
+    "pages/finalpage/finalpage"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "眩晕问诊",
+    "navigationBarTitleText": "VertiQuest",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",

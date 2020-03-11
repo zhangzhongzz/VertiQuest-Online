@@ -1,0 +1,7 @@
+var objlen = function (obj) {
+  return Object.keys(obj).length;
+}
+
+module.exports = {
+  objlen: objlen
+}

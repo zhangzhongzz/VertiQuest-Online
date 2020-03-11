@@ -2,7 +2,7 @@
 <!--授权页面-->
 <view wx:if="{{canIUse}}">
     <view class='header'>
-        <image src='../image/image/add.png'></image>
+        <image src='../../image/add.png'></image>
     </view>
  
     <view class='content'>

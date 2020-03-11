@@ -1,0 +1,87 @@
+
+page {
+  background:#87ceeb;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+ 
+.sheet {
+  background: #fff;
+  border-radius: 36rpx;
+  margin-top: 20rpx;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.naire {
+  height: 800rpx;
+}
+.question {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-top: 40rpx;
+  margin-left: 32rpx;
+}
+.border {
+  height: 2rpx;
+  width: 90%;
+  background-color: #d4d4d4;
+  margin: 16rpx auto;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 30rpx;
+  text-indent: 14rpx;
+  margin-top: 40rpx;
+}
+.radio {
+  margin-bottom: 14rpx;
+}
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 30rpx;
+  text-indent: 14rpx;
+  margin-top: 40rpx;
+}
+.checkbox {
+  margin-bottom: 14rpx;
+}
+.button-group {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: auto;
+  justify-content: space-between;
+}
+.button {
+  background: #6495ed;
+  border-radius: 100rpx;
+  font-size: 30rpx;
+  line-height: 52rpx;
+  height: 90rpx;
+  width: 172rpx;
+  font-weight: bold;
+  color: #fff;
+}
+.button::after {
+  border: 0;
+}
+.id {
+  text-align: center;
+  font-size: 24rpx;
+  color: #c2c2c2;
+  margin: auto;
+  margin-top: 20rpx;
+}
+.bright789_view_hide{
+ display: none;
+}
+.bright789_view_show{
+ display: block;
+}

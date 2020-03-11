@@ -19,15 +19,16 @@ Page({
   },
   bindGetUserInfo: function (e) {//点击的“拒绝”或者“允许
     if (e.detail.userInfo) {//点击了“允许”按钮，
+      console.log('button')
       var that = this;
       requestUrl.requestUrl({//将用户信息传给后台数据库
         url: "/pages/index/index",
         params: {
           openId: globalOpenId,//用户的唯一标识
           nickName: e.detail.userInfo.nickName,//微信昵称
-          avatarUrl: e.detail.userInfo.avatarUrl,//微信头像
-          province: e.detail.userInfo.province,//用户注册的省
-          city: e.detail.userInfo.city//用户注册的市
+          avatarUrl: e.detail.userInfo.avatarUrl//微信头像
+          //province: e.detail.userInfo.province,//用户注册的省
+          //city: e.detail.userInfo.city//用户注册的市
         },
         method: "post",
       })
@@ -38,7 +39,7 @@ Page({
           console.log(errorMsg)
         })
       wx.switchTab({
-        url: '../VehicleIndex/VehicleIndex',
+        url: '../index/index',
       })
     }
   }

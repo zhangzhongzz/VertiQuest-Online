@@ -1,17 +1,27 @@
 //app.js
+var app = getApp()
 App({
+
+  globalData: {
+    userInfo: null,
+    OPENID: null
+  },
+
   onLaunch: function () {
+
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
+    let that = this
+    //初始化云开发
+    wx.cloud.init({
+      env: '',
+      traceUser: true
     })
+    that.getOpenid()
+    // 登录
+
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -33,7 +43,18 @@ App({
       }
     })
   },
-  globalData: {
-    userInfo: null
+
+  getOpenid() {
+    let that = this;
+    wx.cloud.callFunction({
+      name: 'getOpenid',
+      complete: res => {
+        console.log('云函数获取到的openid: ', res.result.openid)
+        var openid = res.result.openid;
+        that.globalData.OPENID = openid
+        console.log('openid为sw我' + that.globalData.OPENID)
+      }
+    })
   }
+  
 })
