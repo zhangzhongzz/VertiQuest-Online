@@ -1,5 +1,0 @@
-<!--pages/videoplayer.wxml-->
-<view>
-    <video src="{{src}}" binderror="videoErrorCallback" style="width:100%;"></video>
-    <button bindtap="bindButtonTap">获取视频</button>
-</view>
