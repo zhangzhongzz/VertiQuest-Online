@@ -8,7 +8,9 @@
     "pages/infor/infor",
     "pages/sound/sound",
     "pages/result/result",
-    "pages/finalpage/finalpage"
+    "pages/finalpage/finalpage",
+    "pages/questlist/questlist",
+    "pages/display/display"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -16,6 +18,5 @@
     "navigationBarTitleText": "VertiQuest",
     "navigationBarTextStyle": "black"
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

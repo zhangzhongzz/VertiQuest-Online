@@ -1,0 +1,129 @@
+<!--pages/display.wxml-->
+<scroll-view>
+  <view  class='content'>
+    <view wx:if="{{name == 'DHI量表'}}" wx:for="{{tabel}}" wx:key="id" wx:for-index="index">
+      <view class='content-DHI'>
+        <view  class='question-DHI' style="flex:8">
+          {{item.question}}
+        </view>
+        <view class='answer-DHI' style="flex:2">
+          <view wx:if="{{option[index]=='A'}}">是</view>
+          <view wx:if="{{option[index]=='B'}}">偶尔</view>
+          <view wx:if="{{option[index]=='C'}}">否</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{name == '逻辑问诊表'}}" wx:for="{{number}}" wx:for-item="number" wx:key="id" wx:for-index="index">
+    <view  class='content-SAS'>
+      <view  class = 'question-SAS'>
+        {{tabel[number].question}}
+      </view>
+
+      <view wx:if="{{index==0}}"  class="answer-SAS">
+        <image class='icon' src="../../image/star-grey.png"></image>
+        {{option[0][0]}}年{{option[0][1]}}月{{option[0][2]}}日
+      </view>
+
+      <view wx:if="{{index==1}}"  class="answer-SAS">
+        <image class='icon' src="../../image/star-grey.png"></image>
+        {{option[1][0]}}年{{option[1][1]}}月{{option[1][2]}}日
+      </view>
+
+      <view wx:if="{{index==2}}"  class="answer-SAS">
+        <image class='icon' src="../../image/star-grey.png"></image>
+        <view wx:if="{{option[2][0]=='A'}}">1次</view>
+        <view wx:if="{{option[2][0]=='B'}}">{{option[2][1]}}次</view>
+        <view wx:if="{{option[2][0]=='C'}}">10次以上</view>
+      </view>
+
+      <view wx:if="{{index>2}}" >
+        
+        <view wx:for="{{option[index]}}"  wx:for-item="option1" wx:key="id" wx:for-index="index">
+
+          <view wx:if="{{option1=='A'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[0].name}}
+          </view>
+
+          <view wx:if="{{option1=='B'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[1].name}}
+          </view>
+
+          <view wx:if="{{option1=='C'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[2].name}}
+          </view>
+
+          <view wx:if="{{option1=='D'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[3].name}}
+          </view>
+
+          <view wx:if="{{option1=='E'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[4].name}}
+          </view>
+
+          <view wx:if="{{option1=='F'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[5].name}}
+          </view>
+
+          <view wx:if="{{option1=='G'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[6].name}}
+          </view>
+
+          <view wx:if="{{option1=='H'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[7].name}}
+          </view>
+
+          <view wx:if="{{option1=='I'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[8].name}}
+          </view>
+
+          <view wx:if="{{option1=='J'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[9].name}}
+          </view>
+
+          <view wx:if="{{option1=='K'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[10].name}}
+          </view>
+
+          <view wx:if="{{option1=='L'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[11].name}}
+          </view>
+
+          <view wx:if="{{option1=='M'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[12].name}}
+          </view>
+
+           <view wx:if="{{option1=='N'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[13].name}}
+          </view>
+
+          <view wx:if="{{option1=='O'}}" class="answer-SAS">
+            <image class='icon' src="../../image/star-grey.png"></image>
+            {{tabel[number].option[14].name}}
+          </view>
+
+ 
+        </view>
+      </view>
+    </view>
+    <view class="line" style=''></view>
+  </view>
+ 
+  
+
+</scroll-view>

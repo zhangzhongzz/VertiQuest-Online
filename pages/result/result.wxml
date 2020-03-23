@@ -1,23 +1,41 @@
 
 <view class='content'>
-  <view class='center-label' style="flex:4; background-color:white" bindtap="opens" data-item="1" hover-class="click-once-opaque"> 
+  <view class='center-label' style="flex:1; background-color:white" bindtap="opens" data-item="1" hover-class="click-once-opaque"> 
     <view class='text-label'>{{chooseQuery}}</view>
   </view>
   <view class="sorting-list{{!isstart?' chioce-list-hide':' chioce-list-show'}}">
     <view wx:for="{{slist}}" catchtap="onclicks1" data-index="{{index}}" class="sorting-item" hover-class="click-once" wx:key="userInfoListId" >{{item.name}}</view>
   </view>
 
-  <view class='center-label' style="flex:4; background-color:white"> 
-    <picker class='text-label' mode="date" value="{{date}}" start="1900-09-01" end="{{date}}" bindchange="bindDateChange">
-       <view class='text-label'>{{chooseDate}}</view>
-    </picker>
-  </view>
-
-  <view class='center-label' style="flex:3; background-color:white" bindtap="query">
-    <view class='text-label'>查询</view>
+  <view class='time-sort' style="flex:1; background-color:white" bindtap="sortTime"> 
+      <view class='text-label'>{{chooseDate}}</view>
+      <image class="{{direction?'rotate':'icon'}}" src='../../image/down.png' ></image>
   </view>
 
 </view>
+
+<view class="{{isstart?'chioce-list-hide':'choice-list-show'}}">
+  <scroll-view>
+    <view class="line" style=''></view>
+    <view>
+      <view id='body'  wx:for="{{llist}}" wx:key='id' wx:for-index='index'>
+        <navigator url="/pages/display/display?name={{item.name}}&time={{item.time}}">
+          <view class='llist' style="">
+            <view style="flex:7 ">
+              <view class="name">{{index+1}}. {{item.name}}</view>
+            </view>
+            <view  calss="time" style="flex:11" >
+              <view class="name">{{item.time}}</view>
+            </view>
+            <image class="icon" style="flex:2;opacity:{{0.5}}" src = '../../image/right.png' mode="widthFix"></image>
+          </view>
+          <view class="line" style=''></view>
+        </navigator>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
 
 
 

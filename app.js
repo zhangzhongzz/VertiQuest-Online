@@ -4,7 +4,8 @@ App({
 
   globalData: {
     userInfo: null,
-    OPENID: null
+    OPENID: null,
+    tablenumber:1,
   },
 
   onLaunch: function () {

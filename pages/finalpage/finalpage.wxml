@@ -9,10 +9,8 @@
               <view class='question'>{{item.question+"(单选)"}}</view>
               <!--view class='border' /-->
               <radio-group class='radio-group' name='answer' bindchange='radioChange'>
-                <label class='radio'><radio value="A" color='#87ceeb' />{{item.option.a}}</label>
-                <label class='radio'><radio value="B" color='#87ceeb' />{{item.option.b}}</label>
-                <label class='radio'><radio value="C" color='#87ceeb' />{{item.option.c}}</label>
-                <label class='radio'><radio value="D" color='#87ceeb' />{{item.option.d}}</label>
+                <label class="radio" wx:for="{{item.option}}"  >
+                      <radio value="{{item.flag}}" color='#fcbe39' checked="{{item.isSelected}}"disabled='true'/>{{item.name}}</label>
               </radio-group>
             </view>
             <view wx:if="{{item.type==='SCQT'}}">
@@ -54,21 +52,25 @@
               
             </view>
             <block wx:if="{{item.type === 'MULTI'}}">
-                 <view  data-id='{{fatherIndex}}' >
+                <view>
+                 <!--view  data-id='{{fatherIndex}}' >
                  <view class = 'SAQTitle'>
                     <text class='question' data-id='{{fatherIndex}}'>{{item.question}}</text>
-                 </view>
+                 </view>-->
+                 <view class='question'>{{item.question}}</view>
 
-                 <picker wx:if="{{idx==0}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDateChange">
+                 <!--<picker wx:if="{{idx==0}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDateChange">
                      <view class="picker">
                        当前选择: {{time}}
                      </view>
-                 </picker>
-                 <picker wx:if="{{idx==1}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDate1Change">
+                 </picker>-->
+                 <view  class="answer-choose" wx:if="{{idx==0}}">当前选择: {{time}}</view>
+                 <!--<picker wx:if="{{idx==1}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDate1Change">
                      <view class="picker">
                        当前选择: {{time1}}
                      </view>
-                 </picker>
+                 </picker>-->
+                 <view class="answer-choose" wx:if="{{idx==1}}">当前选择: {{time1}}</view>
                 </view>
             </block>
             
@@ -76,9 +78,11 @@
       </block>
 
  </scroll-view>
- <view class='button-group'>
-              <button class='button' hover-class='none' bindtap='back' >修改重填</button>
-              <button class='button' hover-class='none' form-type='submit' bindtap='formSubmit'>确认提交</button>
-            </view>
-     </view>    
+
 </view>
+
+<view class='button-group'>
+              <button class='button' style='flex:1' hover-class='wsui-btn__hover_btn' bindtap='back' >修改重填</button>
+              <button class='button' style='flex:1' hover-class='wsui-btn__hover_btn' form-type='submit' bindtap='formSubmit'>确认提交</button>
+            </view>
+</view>    

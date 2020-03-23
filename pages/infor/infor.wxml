@@ -18,7 +18,7 @@
       <view class="left-label">手机</view>
     </view>
     <view  calss="center-label" style="flex:8 ;background-color:white" >
-      <input maxlength="11" class="weui-input" name="phone" placeholder="请输入手机号" value="{{phone}}" disabled ="{{edit=='编辑'?'true':''}}"/>
+      <input maxlength="11" type='number'  class="weui-input" name="phone" placeholder="请输入手机号" value="{{phone}}" disabled ="{{edit=='编辑'?'true':''}}"/>
     </view>
      <image class="image" style="flex:1" src = '../../image/star.png'></image>
   </view>
@@ -30,7 +30,7 @@
       <view class="left-label">年龄</view>
     </view>
     <view  calss="center-label" style="flex:8 ;background-color:white" >
-      <input class="weui-input" name="age" placeholder="请输入年龄" value="{{age}}" disabled ="{{edit=='编辑'?'true':''}}"/>
+      <input maxlength="3" type="number" class="weui-input"  name="age" placeholder="请输入年龄" value="{{age}}" disabled ="{{edit=='编辑'?'true':''}}"/>
     </view>
      <image class="image" style="flex:1" src = '../../image/star.png'></image>
   </view>
@@ -45,7 +45,7 @@
       <radio-group class="radio-group" bindchange="sexChange">
         <label class="radio" wx:for="{{sex}}" wx:key="index">
           <text  class='radio1' >{{item.value}}</text>
-          <radio class="radio" value="{{item.value}}" checked="{{item.checked=='true'?'true':''}}" disabled ="{{edit=='编辑'?'true':''}}"/>
+          <radio class="radio" color="#6495ed" value="{{item.value}}" checked="{{item.checked=='true'?'true':''}}" disabled ="{{edit=='编辑'?'true':''}}"/>
         </label>
       </radio-group>
     </view>
@@ -76,8 +76,9 @@
       </view>
     </view>      
   </view>
-      
-  <button class="submit-button" type="primary" form-type="submit" bindtap="editButton">{{edit}}</button>
+  
+  
+  <button class="submit-button"  form-type="submit" bindtap="editButton">{{edit}}</button>
 
 </form>
 

@@ -62,6 +62,18 @@
   flex-direction: row;
   align-items: center;
 }
+
+.time-sort{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height:90%;
+  justify-content: center;
+  border-right: 1rpx solid #D9D9D9;
+  border-bottom: 1rpx solid #D9D9D9;
+  border-top: 1rpx solid #D9D9D9;
+}
+
 .center-label{
   align-items: center;
   height:90%;
@@ -89,4 +101,37 @@
 .tui-picker-content{
   padding: 30rpx;
   text-align: center;
+}
+
+.llist{
+  border-top: 20rpx;
+  border-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  height:100rpx;
+  align-items: center;
+}
+
+.name{
+  margin-left: 40rpx;
+}
+
+.icon{
+  margin-right:30rpx;
+  width: 40rpx;
+  height:40rpx;
+}
+.time{
+  align-items: center;
+}
+.line {
+   background-color: rgb(199, 184, 184);
+   height: 2rpx;
+   width: 100%;
+}
+
+.rotate{
+  width: 50rpx;
+  height: 50rpx;
+  transform: rotate(180deg)
 }

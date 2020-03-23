@@ -1,0 +1,18 @@
+.questlisttitle{
+  display: flex;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  font-family: microsoft yahei;
+  margin-top: 20rpx;
+}
+.questbuttons{
+  justify-content: center;
+  margin-top: 80rpx;
+}
+.questbutton{
+  width: 80%;
+  margin-top: 50rpx;
+  background-color: #6495ed;
+  color: white;
+}

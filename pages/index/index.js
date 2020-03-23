@@ -12,11 +12,11 @@ Page({
     
     skip:[
       { url: '../infor/infor', image: '../../image/information.png', title: '信息填写' },
-      { url: '../quest/quest', image: '../../image/quest.png      ', title: '问卷填写' },
+      { url: '../questlist/questlist', image: '../../image/quest.png      ', title: '问卷填写' },
       { url: '../video/video', image: '../../image/video.png',       title: '康复视频' },
       { url: '../sound/sound', image: '../../image/sound.png',       title: '语音上传' },
       { url: '../result/result', image: '../../image/result.png',    title: '查询问卷' },
-      { url: '../infor/infor', image: '../../image/upload.png',      title: '备用接口' },
+      { url: '', image: '../../image/upload.png',      title: '备用接口' },
     ],
    
     movies: [

@@ -12,7 +12,7 @@ page {
   border-radius: 36rpx;
   margin-top: 20rpx;
   width: 90%;
-  height: 90%;
+  height: 1060rpx;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -25,6 +25,10 @@ page {
   font-weight: bold;
   margin-top: 40rpx;
   margin-left: 32rpx;
+}
+.answer-choose{
+  margin-top: 15rpx;
+  margin-left: 40rpx;
 }
 .border {
   height: 2rpx;
@@ -53,19 +57,26 @@ page {
   margin-bottom: 14rpx;
 }
 .button-group {
+  margin-left: 10rpx;
+  margin-right: 10rpx;
   display: flex;
   flex-direction: row;
-  width: 80%;
-  margin: auto;
-  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5rpx;
+  margin-top: 20rpx;
 }
 .button {
+  width: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
   background: #6495ed;
   border-radius: 100rpx;
   font-size: 30rpx;
   line-height: 52rpx;
   height: 90rpx;
-  width: 172rpx;
   font-weight: bold;
   color: #fff;
 }
@@ -84,4 +95,10 @@ page {
 }
 .bright789_view_show{
  display: block;
+}
+.wsui-btn__hover_btn {
+
+  opacity: 0.9;
+  transform: scale(0.95, 0.95);
+
 }

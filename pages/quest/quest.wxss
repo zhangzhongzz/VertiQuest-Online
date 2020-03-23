@@ -1,6 +1,6 @@
 
 page {
-  background:#87ceeb;
+  background:rgb(178, 220, 247);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -11,13 +11,13 @@ page {
   border-radius: 36rpx;
   margin-top: 160rpx;
   width: 84%;
-  height: 1000rpx;
+  height: 900rpx;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 .naire {
-  height: 800rpx;
+  height: 700rpx;
 }
 .question {
   font-size: 36rpx;
@@ -47,24 +47,34 @@ page {
   font-size: 30rpx;
   text-indent: 14rpx;
   margin-top: 40rpx;
+  margin-right: 20rpx;
 }
 .checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  justify-content: center;
   margin-bottom: 14rpx;
 }
 .button-group {
+  margin-left: 10rpx;
+  margin-right: 10rpx;
   display: flex;
   flex-direction: row;
-  width: 80%;
-  margin: auto;
-  justify-content: space-between;
+  align-items: center;
+  margin-bottom: auto;
 }
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
   background: #6495ed;
   border-radius: 100rpx;
   font-size: 30rpx;
   line-height: 52rpx;
   height: 90rpx;
-  width: 172rpx;
   font-weight: bold;
   color: #fff;
 }
@@ -83,4 +93,30 @@ page {
 }
 .bright789_view_show{
  display: block;
+}
+.tui-slider-head,.tui-slider-box{
+ height: 80rpx;
+ line-height: 80rpx;
+ font-size: 35rpx;
+ color: #666;
+
+ justify-content: center;
+}
+.tui-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wsui-btn__hover_btn {
+  opacity: 0.9;
+  transform: scale(0.95, 0.95);
+}
+/**换行缩进*/
+.text-label{
+  text-indent: 0rpx;
+  padding-left: 0rpx;
+  text-align: left;
+  word-break:break-all;
+  display: block;
+  justify-content: space-between;
 }

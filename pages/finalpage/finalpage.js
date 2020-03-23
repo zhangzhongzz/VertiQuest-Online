@@ -2,13 +2,15 @@ var util = require('../../utils/util.js')
 const db = wx.cloud.database()
 
 const qnaire = require("../../pages/finalpage/problem.js")  //导入题库
-
+const DHI = require("../../pages/quest/DHI.js")
+var count=0
 var ans = new Array(5)  //答案数组初始化，会在onload函数中赋初值""
 Page({
   data: {
     //queryResult:"",
     qnaire: qnaire.qnaire,
     answer: ans,
+    tablenumber:1,         //当前所填的表号
     id: 0,    //当前题号  比实际小一
     answers: {
       number: Array(),
@@ -21,8 +23,8 @@ Page({
     cishu: "2",         //记录发病次数
     showView:true,
     array:[0,1,2,7,8,9,10,11,12,13,14,15,16],
-    option2: ["", "", "", "", "", "", "", "", "", "", "", "", ""]
-
+    option2: ["", "", "", "", "", "", "", "", "", "", "", "", ""],
+    count:0
   },
   onLoad: function (options) {
     
@@ -36,13 +38,14 @@ Page({
       option1: JSON.parse(options.ans),
       //number:options.ques[-1]
       answers: JSON.parse(options.answers),
-
+      tablenumber:JSON.parse(options.tablenumber),
     })
+    if(this.data.tablenumber==1){                       //若为表一则需要特殊设置年月日及次数相关数据
     this.setData({
       time: this.data.option1[0][0] + "年" + this.data.option1[0][1] + "个月" + this.data.option1[0][2]+ "天",
       time1: this.data.option1[1][0] + "年" + this.data.option1[1][1] + "个月" + this.data.option1[1][2] + "天",
-      cishu:this.data.option1[2][1]
-
+      cishu:this.data.option1[2][1],
+      qnaire: qnaire.qnaire
     })
     if(this.data.option1[2][0]=="B"){
       this.setData({
@@ -53,6 +56,11 @@ Page({
         showView: false
       })
 
+    }
+    }else if(this.data.tablenumber==2){
+      this.setData({
+        qnaire: DHI.DHI
+      })
     }
     for (var i = 0; i < this.data.qnaire.length; i++) {
       if (this.data.array.includes(i)) {
@@ -112,8 +120,16 @@ Page({
 
   //判断答题完成情况
   formSubmit: function () {
-    
-    this.answer2db();
+    console.log("count"+ count)
+    if(count==0)
+    {
+      this.answer2db();
+    }else{
+      wx.showToast({
+        icon: 'none',
+        title: '请勿重复提交！'
+      })
+    }   
   },
   back:function(){
     var pages = getCurrentPages();
@@ -129,6 +145,7 @@ Page({
         number: Array(),
         option: Array()
       },
+      rechange:true,
     })
      wx.navigateBack({
        
@@ -137,41 +154,61 @@ Page({
 
   //将用户完成的答案数组上传至云数据库
   answer2db: function () {
+    count=1;
+    const qnaire1 = require("../../pages/quest/sas.js"); 
+    const DHI = require("../../pages/quest/DHI.js");
     var TIME = util.formatTime(new Date());
     var DATE = util.formatDate(new Date());
-    db.collection('Result').add({
-      data: {
-        name: '抑郁问卷',
-        answer: this.data.answers,
-        date: DATE,
-        time: TIME
-      },
-      success(res) {
-        console.log(res._id);
-        wx.showModal({
-          title: '提示',
-          content: '提交成功',
-          showCancel:false,
-          success: function (res) {
-            if (res.confirm) {
-              console.log('弹框后点取消')
-              wx.navigateBack({
-                delta:2
-              })
-            } else {
-              console.log('弹框后点取消')
+    var tablename='问卷';
+    var tab=1;
+    switch(this.data.tablenumber){
+      case 1:tablename='逻辑问诊表';break;
+      case 2:tablename='DHI量表';tab=2;break;
+      default:tablename='问诊表'
+    }
+      db.collection('Result').add({
+        data: {
+          tablenumber: this.data.tablenumber,     //插入表号
+          name: tablename,
+          answer: this.data.answers,
+          date: DATE,
+          time: TIME
+        },
+        success(res) {
+          console.log(res._id);
+      
+          wx.showModal({
+            title: '提示',
+            content: '提交成功',
+            showCancel: false,
+            success: function (res) {
+              if (res.confirm) {
+                console.log('弹框后点取消')
+                var pages = getCurrentPages();
+                var currPage = pages[pages.length - 1];   //当前页面
+                var prevPage = pages[pages.length - 2];  //上一个页面
+
+                wx.reLaunch({
+                  url: '../index/index',
+                })
+                count=0
+              } else {
+                console.log('弹框后点取消')
+                count=0
+              }
             }
-          }
-        })
-      },
-      fail(res) {
-        wx.showToast({
-          icon: 'none',
-          title: '新增记录失败'
-        })
-        console.error('[数据库] [新增记录] 失败：', err)
-      }
-    })
+          })
+        },
+        fail(res) {
+          count=0
+          wx.showToast({
+            icon: 'none',
+            title: '新增记录失败'
+          })
+          console.error('[数据库] [新增记录] 失败：', err)
+        }
+      })
+    
   },
   bindDateChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)

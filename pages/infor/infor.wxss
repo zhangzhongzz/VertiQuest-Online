@@ -18,14 +18,20 @@
 }
 
 .submit-button{
-  width: 100%;
+  display: flex;
+  color: #fff;
+  background: #6495ed;
+  width: 300rpx;
+  border-radius: 100rpx;
   position: fixed;
-  bottom: 30rpx;
+  bottom: 100rpx;
   left: 0;
   right: 0;
-  z-index: 69;
-  height: 80rpx;
+  font: bold;
+  font-size: 35rpx;
+  height: 90rpx;
   align-items: center;
+  justify-content: center;
 }
 
 .content{
@@ -52,4 +58,16 @@
 .image{
   height: 50rpx;
   width: 50rpx;
+}
+
+.text-label1{
+  margin-left: 400rpx;
+}
+.text-label{
+  text-indent: 0rpx;
+  padding-left: 0rpx;
+  text-align: left;
+  word-break:break-all;
+  display: block;
+  justify-content: space-between;
 }

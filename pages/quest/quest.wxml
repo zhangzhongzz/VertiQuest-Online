@@ -8,8 +8,9 @@
               <view class='question'>{{item.question+"(单选)"}}</view>
               <!--view class='border' /-->
               <radio-group class='radio-group' name='answer' bindchange='radioChange'>
-                <label class="radio" wx:for="{{item.option}}"  >
-                      <radio value="{{item.flag}}" color='#fcbe39' checked="{{item.isSelected}}"/>{{item.name}}</label>
+                <label class="radio" wx:for="{{item.option}}"wx:for-item="items"  >
+                  <radio value="{{items.flag}}" color='#6495ed' checked="{{items.isSelected}}"/>{{items.name}}
+                </label>
               </radio-group>
             </view>
             <view wx:if="{{item.type==='SCQT'}}"class='naire' >
@@ -17,56 +18,96 @@
               <!--view class='border' /-->
               <radio-group class='radio-group' name='answer' bindchange='radioChange1'>
                 <label class="radio" wx:for="{{item.option}}" wx:for-item="items" >
-                      <radio value="{{items.flag}}" color='#fcbe39' checked="{{items.isSelected}}"/>{{items.name}}
+                      <radio value="{{items.flag}}" color='#6495ed' checked="{{items.isSelected}}"/>{{items.name}}
                       <view wx:if="{{idx==2&&items.flag=='B'}}" class="bright789_view_hide{{showView?'bright789_view_show':''}}"> 
-                        <picker  mode="selector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindPickChange" >
+                      <!--  <picker  mode="selector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindPickChange" >
                           <view class="picker">
                              当前选择: {{cishu}}
                           </view>
                         </picker>
+                        -->
+                        <view >
+                          <view class="tui-content">右侧显示当前值</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlidercishu" value="{{cishu}}" min="2"max="10" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA"show-value/>
+                            </view>
+                          </view>
+
                       </view>
              
                 </label>
               </radio-group>
             </view>
             <view wx:if="{{item.type==='MCQ'}}"class='naire'>
-              <view class='question'>{{item.question+"(多选)"}}</view>
+              <view class='question'>{{item.question+"(可多选)"}}</view>
               <!--view class='border' /-->
               <scroll-view scroll-y="true" style="height: 600rpx;">
               <checkbox-group class='checkbox-group' name='answer' bindchange='checkboxChange'>
-                <label class='checkbox'wx:for="{{item.option}}"><checkbox value="{{item.flag}}" color='#fcbe39' />
-                {{item.name}}</label>
+                <label class='checkbox'wx:for="{{item.option}}">
+                  <checkbox value="{{item.flag}}" style='flex:1' color='#6495ed' />
+                  <view class='' style='flex:9'>
+                    <text class='text-label'>{{item.name}}</text>
+                  </view>
+                </label>
               </checkbox-group>
               </scroll-view>
             </view>
             <block wx:if="{{item.type === 'MULTI'}}">
-                 <view class = "naire" data-id='{{fatherIndex}}' >
-                 <view class = 'SAQTitle'>
-                    <text class='question' data-id='{{fatherIndex}}'>{{item.question}}</text>
-                 </view>
+                 <view class = "naire">
+                 <view class = 'question'>{{item.question}}</view>
 
-                 <picker wx:if="{{idx==0}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDateChange">
+                 <!--<picker wx:if="{{idx==0}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDateChange">
                      <view class="picker">
                        当前选择: {{time}}
                      </view>
-                 </picker>
-                 <picker wx:if="{{idx==1}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDate1Change">
+                 </picker>-->
+                 <view wx:if="{{idx==0}}">
+                            <view  class="tui-content">当前选择: {{timearray[0]+'年'}}</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlider" value="{{timearray[0]}}" max="10" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA"show-value/>
+                            </view>
+                            <view class="tui-content">当前选择: {{timearray[1]+'月'}}</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlider1" value="{{timearray[1]}}" max="12" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA"show-value/>
+                            </view>
+                            <view class="tui-content">当前选择: {{timearray[2]+'日'}}</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlider2" value="{{timearray[2]}}" max="30" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA"show-value/>
+                            </view>
+
+                          </view>
+                 <!--<picker wx:if="{{idx==1}}" mode="multiSelector" value="{{item.multiindex}}" range="{{item.multiarray}}" bindchange="bindDate1Change">
                      <view class="picker">
                        当前选择: {{time1}}
                      </view>
-                 </picker>
+                 </picker>-->
+                 <view wx:if="{{idx==1}}" >
+                            <view class="tui-content">当前选择: {{timearray1[0]+'年'}}</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlider3" value="{{timearray1[0]}}" max="10" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA" show-value/>
+                            </view>
+                            <view class="tui-content">当前选择: {{timearray1[1]+'月'}}</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlider4" value="{{timearray1[1]}}" max="12" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA" show-value/>
+                            </view>
+                            <view class="tui-content">当前选择: {{timearray1[2]+'日'}}</view>
+                            <view class="tui-slider-box">
+                               <slider bindchange="changeSlider5" value="{{timearray1[2]}}" max="30" block-size="20" block-color="#c0c0c0" activeColor="#87CEFA" show-value/>
+                            </view>
+                          </view>
                 </view>
             </block>
-            <view class='button-group'>
-              <button class='button' hover-class='none' bindtap='lastq' disabled='{{id==0}}'>上一题</button>
-              <button wx:if="{{id<qnaire.length-1}}" class='button' hover-class='none' form-type='submit' bindtap='nextq'disabled="{{!shownext}}">下一题</button>
-              <button wx:else class='button' hover-class='none' form-type='submit' bindtap='formSubmit'disabled="{{!shownext}}">填写完成</button>
+             <view class='button-group'>
+              <button class='button'  style='flex:1' bindtap='lastq' disabled='{{id==0}}'hover-class='wsui-btn__hover_btn'>上一题</button>
+              <button wx:if="{{id<qnaire.length-1}}" class='button' style='flex:1' hover-class='wsui-btn__hover_btn' form-type='submit' bindtap='nextq'disabled="{{!shownext}}">下一题</button>
+              <button wx:else class='button' style='flex:1' hover-class='wsui-btn__hover_btn' form-type='submit' bindtap='formSubmit'disabled="{{!shownext}}">填写完成</button>
             </view>
             <view class='id'>{{id+1}}/{{qnaire.length}}</view>
           </form>
+         
         </swiper-item>
       </block>
     </swiper>
- 
+    
     
 </view>

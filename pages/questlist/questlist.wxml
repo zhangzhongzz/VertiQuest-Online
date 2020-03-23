@@ -1,0 +1,5 @@
+<view class="questlisttitle">选择问卷</view>
+<view class="questbuttons">
+  <button class="questbutton" bindtap="goQuest">问诊表</button>
+  <button class="questbutton" bindtap="goDHI">DHI</button>
+</view>
